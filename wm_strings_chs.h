@@ -79,8 +79,8 @@ const char HTTP_ERASEBTN[]         PROGMEM = "<br/><form action='/erase' method=
 const char HTTP_UPDATEBTN[]        PROGMEM = "<br/><form action='/update' method='get'><button>更新固件</button></form>";
 const char HTTP_BACKBTN[]          PROGMEM = "<hr><br/><form action='/' method='get'><button>返回</button></form>";
 
-const char HTTP_STATUS_ON[]        PROGMEM = "<div class='msg S'><strong>已连接到</strong> to {v}<br/><em><small>本机 IP：{i}</small></em></div>";
-const char HTTP_STATUS_OFF[]       PROGMEM = "<div class='msg {c}'><strong>未连接到</strong> to {v}{r}</div>"; // {c=class} {v=ssid} {r=status_off}
+const char HTTP_STATUS_ON[]        PROGMEM = "<div class='msg S'><strong>已连接到</strong> {v}<br/><em><small>本机 IP：{i}</small></em></div>";
+const char HTTP_STATUS_OFF[]       PROGMEM = "<div class='msg {c}'><strong>未连接到</strong> {v}{r}</div>"; // {c=class} {v=ssid} {r=status_off}
 const char HTTP_STATUS_OFFPW[]     PROGMEM = "<br/>认证失败"; // STATION_WRONG_PASSWORD,  no eps32
 const char HTTP_STATUS_OFFNOAP[]   PROGMEM = "<br/>没有找到该接入点";   // WL_NO_SSID_AVAIL
 const char HTTP_STATUS_OFFFAIL[]   PROGMEM = "<br/>无法连接"; // WL_CONNECT_FAILED
