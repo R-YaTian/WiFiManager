@@ -366,6 +366,9 @@ class WiFiManager
     //if this is set, customise style
     void          setCustomMenuHTML(const char* html);
 
+    //if this is false, will close AP after exit - defaut false
+    void          setKeepAP(boolean keepAP);
+
     //if this is true, remove duplicated Access Points - defaut true
     void          setRemoveDuplicateAPs(boolean removeDuplicates);
     
@@ -568,6 +571,7 @@ class WiFiManager
     int           _staShowStaticFields    = 0;     // ternary 1=always show static ip fields, 0=only if set, -1=never(cannot change ips via web!)
     int           _staShowDns             = 0;     // ternary 1=always show dns, 0=only if set, -1=never(cannot change dns via web!)
     boolean       _removeDuplicateAPs     = true;  // remove dup aps from wifiscan
+    boolean       _keepAP                 = false; // do not close AP after exit if true
     boolean       _showPassword           = false; // show or hide saved password on wifi form, might be a security issue!
     boolean       _shouldBreakAfterConfig = false; // stop configportal on save failure
     boolean       _configPortalIsBlocking = true;  // configportal enters blocking loop 
@@ -580,7 +584,7 @@ class WiFiManager
     boolean       _paramsInWifi           = true;  // show custom parameters on wifi page
     boolean       _showInfoErase          = true;  // info page erase button
     boolean       _showInfoUpdate         = true;  // info page update button
-    boolean       _showBack               = false; // show back button
+    boolean       _showBack               = true;  // show back button
     boolean       _enableConfigPortal     = true;  // FOR autoconnect - start config portal if autoconnect failed
     boolean       _disableConfigPortal    = true;  // FOR autoconnect - stop config portal if cp wifi save
     String        _hostname               = "";    // hostname for esp8266 for dhcp, and or MDNS
