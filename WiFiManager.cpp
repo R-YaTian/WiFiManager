@@ -987,19 +987,24 @@ bool WiFiManager::shutdownConfigPortal(){
   // still no way to reproduce reliably
 
   bool ret = false;
-  ret = WiFi.softAPdisconnect(false);
-  
-  #ifdef WM_DEBUG_LEVEL
-  if(!ret)DEBUG_WM(DEBUG_ERROR,F("[ERROR] disconnect configportal - softAPdisconnect FAILED"));
-  DEBUG_WM(DEBUG_VERBOSE,F("restoring usermode"),getModeString(_usermode));
-  #endif
-  delay(1000);
-  WiFi_Mode(_usermode); // restore users wifi mode, BUG https://github.com/esp8266/Arduino/issues/4372
-  if(WiFi.status()==WL_IDLE_STATUS){
-    WiFi.reconnect(); // restart wifi since we disconnected it in startconfigportal
-    #ifdef WM_DEBUG_LEVEL
-    DEBUG_WM(DEBUG_VERBOSE,F("WiFi Reconnect, was idle"));
-    #endif
+  if (!_keepAP) {
+      ret = WiFi.softAPdisconnect(false);
+
+      #ifdef WM_DEBUG_LEVEL
+      if(!ret)DEBUG_WM(DEBUG_ERROR,F("[ERROR] disconnect configportal - softAPdisconnect FAILED"));
+      DEBUG_WM(DEBUG_VERBOSE,F("restoring usermode"),getModeString(_usermode));
+      #endif
+      delay(1000);
+      WiFi_Mode(_usermode); // restore users wifi mode, BUG https://github.com/esp8266/Arduino/issues/4372
+      if(WiFi.status()==WL_IDLE_STATUS) {
+        WiFi.reconnect(); // restart wifi since we disconnected it in startconfigportal
+        #ifdef WM_DEBUG_LEVEL
+        DEBUG_WM(DEBUG_VERBOSE,F("WiFi Reconnect, was idle"));
+        #endif
+      }
+  } else {
+      WiFi.reconnect();
+      ret = true;
   }
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("wifi status:"),getWLStatusString(WiFi.status()));
@@ -2866,6 +2871,16 @@ void WiFiManager::setCustomHeadElement(const char* html) {
  */
 void WiFiManager::setCustomMenuHTML(const char* html) {
   _customMenuHTML = html;
+}
+
+/**
+ * toggle keep AP opening after exit
+ * if this is false, will close AP after exit - defaut false
+ * @access public
+ * @param boolean keepAP [false]
+ */
+void WiFiManager::setKeepAP(boolean keepAP) {
+    _keepAP = keepAP;
 }
 
 /**
